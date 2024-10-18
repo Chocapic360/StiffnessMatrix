@@ -81,7 +81,7 @@ class App(ct.CTk):
         super().__init__()
 
         self.title("Stiffness Matrix")
-        self.geometry("750x400")
+        self.geometry("720x300")
         self._set_appearance_mode("dark");
 
         self.e1_frame = ElementFrame(self, 1)
