@@ -1,4 +1,5 @@
-import numpy
+import numpy as np
+#from customtkinter import *
 
 class Analysis_Element:
     def __init__(self, element_number:int) -> None:
@@ -28,3 +29,18 @@ k2 = element2.generate_k()
 element3 = Analysis_Element(3)
 element3.input_data()
 k3 = element3.generate_k()
+
+k_mat = np.array(
+    [[k1+k2,-k2,0],
+    [-k2,k2+k3,-k3],
+    [0,-k3,k3]]
+)
+
+F_vec = np.zeros(3);
+
+for i in range(3):
+    F_vec[i] = int(input(f"Input force at node {i+2}: "))
+
+d = np.matmul(F_vec,np.linalg.inv(k_mat))
+d = np.insert(d,0,0)
+print(d)
