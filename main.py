@@ -1,0 +1,30 @@
+import numpy
+
+class Analysis_Element:
+    def __init__(self, element_number:int) -> None:
+        self.element_number = element_number
+
+    def input_data(self) -> None:
+        self.area = int(input(f"Enter area for Element_{self.element_number}: "))
+        self.length = int(input(f"Enter length for Element_{self.element_number}: "))
+        self.youngs_mod = int(input(f"Enter youngs modulus for Element_{self.element_number}: "))
+
+    def generate_k(self) -> float:
+        a = self.area
+        l = self.length
+        e = self.youngs_mod
+        self.k = (a*e)/l
+        return self.k
+
+
+element1 = Analysis_Element(1)
+element1.input_data()
+k1 = element1.generate_k()
+
+element2 = Analysis_Element(2)
+element2.input_data()
+k2 = element2.generate_k()
+
+element3 = Analysis_Element(3)
+element3.input_data()
+k3 = element3.generate_k()
