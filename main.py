@@ -1,5 +1,4 @@
 import numpy as np
-#from customtkinter import *
 
 class Analysis_Element:
     def __init__(self, element_number:int) -> None:
