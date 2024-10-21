@@ -21,9 +21,9 @@ class ElementFrame(ct.CTkFrame):
         self.young_entry.grid(row=3,padx=10,pady=(10,10),sticky="nsw")
 
     def enter_data(self):
-        self.element.set_area(int(self.area_entry.get()))
-        self.element.set_length(int(self.length_entry.get()))
-        self.element.set_youngs_mod(int(self.young_entry.get()))
+        self.element.set_area(float(self.area_entry.get()))
+        self.element.set_length(float(self.length_entry.get()))
+        self.element.set_youngs_mod(float(self.young_entry.get()))
 
 class ForceVectorFrame(ct.CTkFrame):
     def __init__(self, master):
@@ -33,11 +33,11 @@ class ForceVectorFrame(ct.CTkFrame):
         self.label = ct.CTkLabel(self, text="Forces on nodes 2-4");
         self.label.grid(row=0,padx=10,pady=(0,0),sticky="nsw")
 
-        self.f2_entry = ct.CTkEntry(self, placeholder_text="Froce 2 (N)")
-        self.f2_entry.grid(row=1,padx=10,pady=(10,0))
-        self.f3_entry = ct.CTkEntry(self, placeholder_text="Froce 3 (N)")
-        self.f3_entry.grid(row=2,padx=10,pady=(10,0))
-        self.f4_entry = ct.CTkEntry(self, placeholder_text="Froce 4 (N)")
+        self.f2_entry = ct.CTkEntry(self, placeholder_text="Force 2 (N)")
+        self.f2_entry.grid(row=1,padx=10,pady=(10,0))        
+        self.f3_entry = ct.CTkEntry(self, placeholder_text="Force 3 (N)")
+        self.f3_entry.grid(row=2,padx=10,pady=(10,0))        
+        self.f4_entry = ct.CTkEntry(self, placeholder_text="Force 4 (N)")
         self.f4_entry.grid(row=3,padx=10,pady=(10,10))
     
     def enter_data(self):
