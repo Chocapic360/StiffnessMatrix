@@ -5,10 +5,10 @@ class Analysis_Element:
         self.element_number = element_number
 
     def input_data(self) -> None:
-        self.area = float(input(f"Enter area for Element (m^2) {self.element_number}: "))
-        self.length = float(input(f"Enter length for Element (m) {self.element_number}: "))
-        self.youngs_mod = float(input(f"Enter youngs modulus for Element (kPa) {self.element_number}: "))
-        self.node_force = float(input(f"Enter the force applied on node (N) {self.element_number+1}: "))
+        self.area = float(input(f"Enter area for Element {self.element_number} (m^2): "))
+        self.length = float(input(f"Enter length for Element {self.element_number} (m): "))
+        self.youngs_mod = float(input(f"Enter youngs modulus for Element {self.element_number} (kPa): "))
+        self.node_force = float(input(f"Enter the force applied on node {self.element_number+1} (N): "))
 
     def generate_k(self) -> float:
         a = self.area
@@ -38,5 +38,4 @@ k_mat = np.delete(k_mat, (0), axis=0)
 k_mat = np.delete(k_mat, (0), axis=1)
 
 d = np.matmul(F_vec,np.linalg.inv(k_mat))
-d.insert(0,0)
 print(d)
