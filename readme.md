@@ -21,9 +21,8 @@ This project is modeled after Example 4.1 in the reference textbook, and follows
    - Cross-sectional area (A)
    - Length of the element (L)
 3. **Force Input**: The user enters the forces applied at each node.
-4. **Global Stiffness Matrix Generation**: The software will calculate and display the global stiffness matrix based on the input data.
+4. **Global Stiffness Matrix Generation**: The software will calculate the global stiffness matrix based on the input data.
 5. **Displacement Calculation**: The software will solve for the displacements of each node using the stiffness matrix and the applied forces.
-6. **Reaction Force Calculation**: The reaction force at the fixed end of the component will be calculated.
 
 ## Usage
 
@@ -42,8 +41,10 @@ This project is modeled after Example 4.1 in the reference textbook, and follows
     ```bash
     python main-gui.py
     ```
-Input Data and press the enter button to compute the displacements
-![Screenshot 2024-10-26 024212](https://github.com/user-attachments/assets/8dd588a4-20b4-4e85-9407-56ec3c406360)
+   
+   ![Screenshot 2024-10-26 024212](https://github.com/user-attachments/assets/8dd588a4-20b4-4e85-9407-56ec3c406360)
+
+   Fill in your values and press the blue enter button to get your displacements.
 
 ## License
 
