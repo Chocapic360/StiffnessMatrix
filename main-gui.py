@@ -81,7 +81,12 @@ class App(ct.CTk):
         self.num_elements = int(input("How many elements?: "))
         global num_elements #IK it's goofy but it's 1am
         num_elements = self.num_elements
-        self.geometry("720x300") # TODO: Change aspect ratio with element # (Make sure it's not too big)
+        if num_elements < 6:
+            x = 180*(num_elements+1)+20
+            y = 38*(num_elements)+240
+            self.geometry(f"{x}x{y}")
+        else:
+            self.geometry("1100x380") 
         self._set_appearance_mode("dark");
 
         self.element_list = []
