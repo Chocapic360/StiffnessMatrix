@@ -40,9 +40,10 @@ This project is modeled after Example 4.1 in the reference textbook, and follows
 
 3. **Run the script**:
     ```bash
-    python main.py
+    python main-gui.py
     ```
-
+Input Data and press the enter button to compute the displacements
+![Screenshot 2024-10-26 024212](https://github.com/user-attachments/assets/8dd588a4-20b4-4e85-9407-56ec3c406360)
 
 ## License
 
