@@ -17,7 +17,7 @@ class ElementFrame(ct.CTkFrame):
         self.length_entry = ct.CTkEntry(self, placeholder_text="Length (m)")
         self.length_entry.grid(row=2,padx=10,pady=(10,0),sticky="nsw")
 
-        self.young_entry = ct.CTkEntry(self, placeholder_text="Young's Modulus (Pa)")
+        self.young_entry = ct.CTkEntry(self, placeholder_text="Young's Modulus (GPa)")
         self.young_entry.grid(row=3,padx=10,pady=(10,10),sticky="nsw")
 
     def enter_data(self):
@@ -30,18 +30,22 @@ class ForceVectorFrame(ct.CTkFrame):
         super().__init__(master)
         self.force_vec = np.zeros(3)
 
-        self.label = ct.CTkLabel(self, text="Forces on nodes 2-4");
+        self.label = ct.CTkLabel(self, text="Forces:");
         self.label.grid(row=0,padx=10,pady=(0,0),sticky="nsw")
 
-        self.f2_entry = ct.CTkEntry(self, placeholder_text="Force 2 (N)")
-        self.f2_entry.grid(row=1,padx=10,pady=(10,0))        
-        self.f3_entry = ct.CTkEntry(self, placeholder_text="Force 3 (N)")
-        self.f3_entry.grid(row=2,padx=10,pady=(10,0))        
-        self.f4_entry = ct.CTkEntry(self, placeholder_text="Force 4 (N)")
-        self.f4_entry.grid(row=3,padx=10,pady=(10,10))
+        self.entry_list = []
+        for i in range(num_elements):
+            x = ct.CTkEntry(self, placeholder_text=f"Force on node {i+1} (kN)")
+            if i == num_elements-1:
+                x.grid(row=i+1,padx=10,pady=(10,10))        
+            else:
+                x.grid(row=i+1,padx=10,pady=(10,0))        
+            self.entry_list.append(x)
     
     def enter_data(self):
-        self.force_vec = [int(self.f2_entry.get()),int(self.f3_entry.get()),int(self.f4_entry.get())]
+        self.force_vec = [0]*num_elements
+        for i in range(num_elements):
+            self.force_vec[i] = float(self.entry_list[i].get())
 
 class OutputFrame(ct.CTkFrame):
     def __init__(self,master):
@@ -50,74 +54,71 @@ class OutputFrame(ct.CTkFrame):
         self.label = ct.CTkLabel(self, text="Displacement Output")
         self.label.grid(row=0,columnspan=4,padx=10,pady=(0,0),sticky="nsw")
 
-        self.n1 = ct.CTkLabel(self, text="Node 1: ")
-        self.n1.grid(row=1,column=0,padx=10,pady=(0,0),sticky="nsw")
-        self.n1_val_label = ct.CTkLabel(self, text=0)
-        self.n1_val_label.grid(row=1,column=1,padx=10,pady=(0,0),sticky="nsw")
+        self.node_out_array = []
+        self.label_array = []
+        new_index = 0;
+        for i in range(num_elements):
+            x = ct.CTkLabel(self, text=f"Node {i+1}: ")
+            x.grid(row=1,column=new_index,padx=10,sticky="nsw")
+            self.label_array.append(x)
 
-        self.n2 = ct.CTkLabel(self, text="Node 2: ")
-        self.n2.grid(row=1,column=2,padx=10,pady=(0,0),sticky="nsw")
-        self.n2_val_label = ct.CTkLabel(self, text=0)
-        self.n2_val_label.grid(row=1,column=3,padx=10,pady=(0,0),sticky="nsw")
-
-        self.n3 = ct.CTkLabel(self, text="Node 3: ")
-        self.n3.grid(row=1,column=4,padx=10,pady=(0,0),sticky="nsw")
-        self.n3_val_label = ct.CTkLabel(self, text=0)
-        self.n3_val_label.grid(row=1,column=5,padx=10,pady=(0,0),sticky="nsw")
-
-        self.n4 = ct.CTkLabel(self, text="Node 4: ")
-        self.n4.grid(row=1,column=6,padx=10,pady=(0,0),sticky="nsw")
-        self.n4_val_label = ct.CTkLabel(self, text=0)
-        self.n4_val_label.grid(row=1,column=7,padx=10,pady=(0,0),sticky="nsw")
+            x = ct.CTkLabel(self, text=0)
+            x.grid(row=1,column=new_index+1,padx=10,sticky="nsw")
+            self.node_out_array.append(x)
+            new_index = new_index+2
 
     def update_out(self, d_vec:np.ndarray):
-        self.n1_val_label.configure(text=f"{d_vec[0]:.3f} m")
-        self.n2_val_label.configure(text=f"{d_vec[1]:.3f} m")
-        self.n3_val_label.configure(text=f"{d_vec[2]:.3f} m")
-        self.n4_val_label.configure(text=f"{d_vec[3]:.3f} m")
+        for i in range(num_elements):
+            node = self.node_out_array[i]
+            displacement = float(d_vec[i])
+            node.configure(text=f"{(displacement*1000):.3f}mm")
         
 class App(ct.CTk):
     def __init__(self):
         super().__init__()
 
         self.title("Stiffness Matrix")
-        self.geometry("720x300")
+        self.num_elements = int(input("How many elements?: "))
+        global num_elements #IK it's goofy but it's 1am
+        num_elements = self.num_elements
+        self.geometry("720x300") # TODO: Change aspect ratio with element # (Make sure it's not too big)
         self._set_appearance_mode("dark");
 
-        self.num_elements = int(input("How many elements?: "))
-        self.elementarray = []
+        self.element_list = []
         for i in range(self.num_elements):
-            pass
+            x = ElementFrame(self,i+1)
+            x.grid(row=0,column=i,padx=10,pady=(10,0),sticky="nsw")
+            self.element_list.append(x)
 
         self.force_frame = ForceVectorFrame(self)
-        self.force_frame.grid(row=0,column=3,padx=10,pady=(10,0),sticky="nsw")
+        self.force_frame.grid(row=0,column=self.num_elements,padx=10,pady=(10,0),sticky="nsw")
 
         self.entr_btn = ct.CTkButton(self, text="Enter", command=self.enter_all_data)
-        self.entr_btn.grid(row=1,columnspan=4,padx=10,pady=(10,10),sticky="ew")
+        self.entr_btn.grid(row=1,columnspan=self.num_elements,padx=10,pady=(10,10),sticky="ew")
 
         self.output = OutputFrame(self)
-        self.output.grid(row=3,columnspan=4,padx=10,pady=(10,10),sticky="ew")
+        self.output.grid(row=3,columnspan=self.num_elements,padx=10,pady=(10,10),sticky="ew")
 
     def calculate(self) -> None:
         f_vec = self.force_frame.force_vec
-        k1 = self.e1_frame.element.generate_k()
-        k2 = self.e2_frame.element.generate_k()
-        k3 = self.e3_frame.element.generate_k()
 
-        k_mat = np.array(
-            [[k1+k2,-k2,0],
-            [-k2,k2+k3,-k3],
-            [0,-k3,k3]]
-        )
+        self.k_mat = np.zeros((num_elements+1,num_elements+1))
+        for i in range(self.num_elements):
+            k_val = self.element_list[i].element.generate_k()
+            self.k_mat[i][i] += k_val
+            self.k_mat[i+1][i] = -k_val
+            self.k_mat[i][i+1] = -k_val
+            self.k_mat[i+1][i+1] += k_val
 
-        d = np.matmul(f_vec,np.linalg.inv(k_mat))
-        d = np.insert(d,0,0)
+        self.k_mat = np.delete(self.k_mat, (0), axis=0)
+        self.k_mat = np.delete(self.k_mat, (0), axis=1)
+
+        d = np.matmul(f_vec,np.linalg.inv(self.k_mat))
         self.output.update_out(d)
 
     def enter_all_data(self) -> None:
-        self.e1_frame.enter_data()
-        self.e2_frame.enter_data()
-        self.e3_frame.enter_data()
+        for i in range(num_elements):
+            self.element_list[i].enter_data()
         self.force_frame.enter_data()
         self.calculate()
 
