@@ -84,14 +84,10 @@ class App(ct.CTk):
         self.geometry("720x300")
         self._set_appearance_mode("dark");
 
-        self.e1_frame = ElementFrame(self, 1)
-        self.e1_frame.grid(row=0,column=0,padx=10,pady=(10,0),sticky="nsw")
-
-        self.e2_frame = ElementFrame(self, 2)
-        self.e2_frame.grid(row=0,column=1,padx=10,pady=(10,0),sticky="nsw")
-
-        self.e3_frame = ElementFrame(self, 3)
-        self.e3_frame.grid(row=0,column=2,padx=10,pady=(10,0),sticky="nsw")
+        self.num_elements = int(input("How many elements?: "))
+        self.elementarray = []
+        for i in range(self.num_elements):
+            pass
 
         self.force_frame = ForceVectorFrame(self)
         self.force_frame.grid(row=0,column=3,padx=10,pady=(10,0),sticky="nsw")
