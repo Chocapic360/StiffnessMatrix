@@ -36,15 +36,26 @@ This project is modeled after Example 4.1 in the reference textbook, and follows
     ```bash
     pip install -r requirements.txt
     ```
-
+## For the GUI
 3. **Run the script**:
     ```bash
     python main-gui.py
     ```
+4. **A prompt will show up in the terminal asking how many elements make up the Axially Loaded Component**
+     - After entering a value a window will pop-up.
    
    ![Screenshot 2024-10-26 024212](https://github.com/user-attachments/assets/8dd588a4-20b4-4e85-9407-56ec3c406360)
 
-   Fill in your values and press the blue enter button to get your displacements.
+5. **Fill in your values and press the blue enter button to get your displacements.**
+
+## For the CLI
+3. **Run the script**:
+    ```bash
+    python main.py
+    ```
+4. **Follow the instructions on the terminal**
+
+   ![Screenshot 2024-10-27 162707](https://github.com/user-attachments/assets/406ba0bf-4703-453a-b1ff-9fe13cf8186b)
 
 ## License
 
