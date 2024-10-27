@@ -8,7 +8,7 @@ class Analysis_Element:
         self.area = float(input(f"Enter area for Element {self.element_number} (m^2): "))
         self.length = float(input(f"Enter length for Element {self.element_number} (m): "))
         self.youngs_mod = float(input(f"Enter youngs modulus for Element {self.element_number} (GPa): "))*(1000000)
-        self.node_force = float(input(f"Enter the force applied on node {self.element_number+1} (kN): "))*(1000)
+        self.node_force = float(input(f"Enter the force applied on node {self.element_number} (kN): "))*(1000)
 
     def generate_k(self) -> float:
         a = self.area
