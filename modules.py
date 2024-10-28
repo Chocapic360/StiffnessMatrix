@@ -1,6 +1,5 @@
 from typing import Any
 
-
 class Analysis_Element:
     def __init__(self, element_number:int) -> None:
         self.element_number = element_number
