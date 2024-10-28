@@ -34,8 +34,14 @@ for i in range(num_elements):
     k_mat[i+1][i+1] += k_val
     F_vec.append(element_list[i].node_force)
 
+print("\n--- K-Matrix ---")
+print(k_mat)
+
 k_mat = np.delete(k_mat, (0), axis=0)
 k_mat = np.delete(k_mat, (0), axis=1)
+
+print("\n--- Inv K-Matrix ---")
+print(np.linalg.inv(k_mat))
 
 d = np.matmul(F_vec,np.linalg.inv(k_mat))
 print()
