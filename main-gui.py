@@ -37,11 +37,11 @@ class ForceVectorFrame(ct.CTkFrame):
         for i in range(num_elements):
             x = ct.CTkEntry(self, placeholder_text=f"Force on node {i+1} (kN)")
             if i == num_elements-1:
-                x.grid(row=i+1,padx=10,pady=(10,10))        
+                x.grid(row=i+1,padx=10,pady=(10,10))
             else:
-                x.grid(row=i+1,padx=10,pady=(10,0))        
+                x.grid(row=i+1,padx=10,pady=(10,0))
             self.entry_list.append(x)
-    
+
     def enter_data(self):
         self.force_vec = [0]*num_elements
         for i in range(num_elements):
@@ -72,7 +72,7 @@ class OutputFrame(ct.CTkFrame):
             node = self.node_out_array[i]
             displacement = float(d_vec[i])
             node.configure(text=f"{(displacement*1000):.3f}mm")
-        
+
 class App(ct.CTk):
     def __init__(self):
         super().__init__()
@@ -86,7 +86,7 @@ class App(ct.CTk):
             y = 38*(num_elements)+240
             self.geometry(f"{x}x{y}")
         else:
-            self.geometry("1100x380") 
+            self.geometry("1100x380")
         self._set_appearance_mode("dark");
 
         self.element_list = []
@@ -115,8 +115,14 @@ class App(ct.CTk):
             self.k_mat[i][i+1] = -k_val
             self.k_mat[i+1][i+1] += k_val
 
+        print("\n--- K-Matrix ---")
+        print(self.k_mat)
+
         self.k_mat = np.delete(self.k_mat, (0), axis=0)
         self.k_mat = np.delete(self.k_mat, (0), axis=1)
+
+        print("\n--- Inv K-Matrix ---")
+        print(np.linalg.inv(self.k_mat))
 
         d = np.matmul(f_vec,np.linalg.inv(self.k_mat))
         self.output.update_out(d)
